@@ -14,7 +14,7 @@ def convert(num,bitType):
     value = 0
     for index in range(len(num)):
         if(int(num[index])==1):
-            value+=(2**((bitType-1)-i))
+            value+=(2**((bitType-1)-index))
     if value == 8:
         return "[bs]"
     return chr(value)
