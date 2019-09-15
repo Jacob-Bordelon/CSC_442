@@ -1,4 +1,4 @@
-# CSC_442
+# Binary Decoder
 This program will take a .txt binary file and convert it to ascii
 
 way to use it:
