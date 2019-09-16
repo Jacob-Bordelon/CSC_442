@@ -56,7 +56,8 @@ def encrypt(message, key):
         # check for spaces
         if(message[i] == " "):
             result+=" "
-        else: #otherwise get the table value
+        else: 
+            #otherwise get the table value
             result += getAlphabet(message[i],key[a%len(key)],'-e')
             a+=1
     return result
@@ -69,7 +70,8 @@ def decrypt(message, key):
         # check for spaces
         if(message[i] == " "):
             result+=" "
-        else: #otherwise get the table value
+        else: 
+            #otherwise get the table value
             result += getAlphabet(message[i],key[a%len(key)],'-d')
             a+=1
     return result
