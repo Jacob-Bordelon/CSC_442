@@ -1,5 +1,11 @@
 import sys
 
+# Use python2.7
+
+# Terminal: python Decoder.py [-e,-d] [key] (<>) [name_of_text_file]
+# Ex: python Decoder.py -e mykey
+# enter my message
+
 # encryption method:
 # you're given a key and a message
 # Ex: message = "This is the Message", key = "Lemon"
@@ -23,10 +29,14 @@ import sys
 
 # get the table value of the combined letters
 def getAlphabet(message,key,mode):
+    # checks if the character is a letter
     if message.isalpha() == False:
         return message
+    
+    # checks the mode and returns the appropriate value
     if(mode == "-e"):
         value = (ord(message.upper()) + ord(key.upper()))%26
+        # checks for the original casing 
         if message.isupper() :
             return chr(value+65).upper()
         else:
@@ -46,7 +56,7 @@ def encrypt(message, key):
         # check for spaces
         if(message[i] == " "):
             result+=" "
-        else:
+        else: #otherwise get the table value
             result += getAlphabet(message[i],key[a%len(key)],'-e')
             a+=1
     return result
@@ -59,21 +69,26 @@ def decrypt(message, key):
         # check for spaces
         if(message[i] == " "):
             result+=" "
-        else:
+        else: #otherwise get the table value
             result += getAlphabet(message[i],key[a%len(key)],'-d')
             a+=1
     return result
 
 
 # Main
+
+# checks for the mode and the key value
 mode = sys.argv[1]
 key = sys.argv[2]
 
+# checks if youre using stdin or not
+# if not, just type the message 
 if '<' in sys.argv:
     message = sys.stdin.read()
 else:
     message = raw_input()
 
+# checks the mode for the whether you're gonna encrypt or decrypt
 if mode == '-e':
     print encrypt(message, key)
 else:
