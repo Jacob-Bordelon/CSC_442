@@ -1,10 +1,13 @@
 import sys
 
+# Jacob, Bruno, Eboni, JonMichael, Logan, Tyler
+# Github: https://github.com/Jacob-Bordelon/CSC_442.git
+
 # Use python2.7
 
 # Terminal: python Decoder.py [-e,-d] [key] (<>) [name_of_text_file]
 # Ex: python Decoder.py -e mykey
-# enter my message
+# enter the message
 
 # encryption method:
 # you're given a key and a message
@@ -33,65 +36,61 @@ def getAlphabet(message,key,mode):
     if message.isalpha() == False:
         return message
     
-    # checks the mode and returns the appropriate value
+    # encrypt the message
     if(mode == "-e"):
         value = (ord(message.upper()) + ord(key.upper()))%26
-        # checks for the original casing 
         if message.isupper() :
             return chr(value+65).upper()
         else:
             return chr(value+65).lower()
     else:
+        # decrypt the message
         value = (ord(message.upper()) - ord(key.upper()))%26
         if message.isupper() :
             return chr(value+65).upper()
         else:
             return chr(value+65).lower()
 
-#encypt the message
-def encrypt(message, key):
+#encypt/decrypt the message
+def crypt(message, key, mode):
     a = 0
     result = ""
     for i in range(len(message)):
         # check for spaces
         if(message[i] == " "):
             result+=" "
-        else: 
-            #otherwise get the table value
-            result += getAlphabet(message[i],key[a%len(key)],'-e')
+        else:
+            # will either encrypt or decrypt the message based on the mode
+            result += getAlphabet(message[i],key[a%len(key)],mode)
             a+=1
     return result
 
-#decrypt the message
-def decrypt(message, key):
-    a = 0
-    result = ""
-    for i in range(len(message)):
-        # check for spaces
-        if(message[i] == " "):
-            result+=" "
-        else: 
-            #otherwise get the table value
-            result += getAlphabet(message[i],key[a%len(key)],'-d')
-            a+=1
-    return result
+
 
 
 # Main
 
-# checks for the mode and the key value
+# check for user input errors 
+if len(sys.argv) < 3:
+    if len(sys.argv) == 1:
+        print "mode not present"
+    if len(sys.argv) == 2:
+        print "key not present"
+    quit(0)
+
+
 mode = sys.argv[1]
 key = sys.argv[2]
 
-# checks if youre using stdin or not
-# if not, just type the message 
+# check for stdin 
 if '<' in sys.argv:
     message = sys.stdin.read()
 else:
     message = raw_input()
 
-# checks the mode for the whether you're gonna encrypt or decrypt
-if mode == '-e':
-    print encrypt(message, key)
+# check if the mode is recognized or not
+if mode in ['-e','-d']:
+    print crypt(message, key,mode)
 else:
-    print decrypt(message, key)
+    print "mode not recognized"
+    print "please use either -e (encryption) or -d(decryption)"
