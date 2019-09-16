@@ -21,7 +21,10 @@ import sys
 # its the exact same as encryption only instead of adding the two value of the message and key
 # we're subtracting: (ie. A-B%26 = new letter ) 
 
+# get the table value of the combined letters
 def getAlphabet(message,key,mode):
+    if message.isalpha() == False:
+        return message
     if(mode == "-e"):
         value = (ord(message.upper()) + ord(key.upper()))%26
         if message.isupper() :
@@ -35,6 +38,7 @@ def getAlphabet(message,key,mode):
         else:
             return chr(value+65).lower()
 
+#encypt the message
 def encrypt(message, key):
     a = 0
     result = ""
@@ -46,7 +50,8 @@ def encrypt(message, key):
             result += getAlphabet(message[i],key[a%len(key)],'-e')
             a+=1
     return result
-            
+
+#decrypt the message
 def decrypt(message, key):
     a = 0
     result = ""
@@ -59,9 +64,10 @@ def decrypt(message, key):
             a+=1
     return result
 
+
+# Main
 mode = sys.argv[1]
 key = sys.argv[2]
-
 
 if '<' in sys.argv:
     message = sys.stdin.read()
