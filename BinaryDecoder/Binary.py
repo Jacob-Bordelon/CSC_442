@@ -1,6 +1,8 @@
 # Use python 2.7
 # Example: python Binary.py < test1.txt
 
+# Github: https://github.com/Jacob-Bordelon/CSC_442.git
+
 import sys
 
 
