@@ -1,7 +1,13 @@
-# Use python 2.7
-# Example: python Binary.py < test1.txt
-
-# Github: https://github.com/Jacob-Bordelon/CSC_442.git
+# File:     Binary.py
+# Team:     Johnmichael Book, Jacob Bordelon, Tyler Nelson,
+#           Logan Simmons, Eboni Williams, Breno Yamada Riquieri
+# Version:  09.23.19
+# Usage:    Use python 2.7
+#           Example: python Binary.py < test1.txt
+# Github:   https://github.com/Jacob-Bordelon/CSC_442.git
+# Descr:    This program reads from a text file containing a sequence
+#           of binary digits, in either 7- or 8-bit. It then decodes
+#           the file into readable ouptut for the user.
 
 import sys
 
@@ -43,6 +49,12 @@ else:
 result = ""
 for i in range(0,len(contents),bitType):
     result+= convert(contents[i:i+bitType],bitType)
+
+# if the backspace key exists in the final result remove it
+# user a while loop to get every instance of backspace
+while "[bs]" in result:
+    erase = result.index("[bs]")
+    result = result[0:erase-1:] + result[erase+4::]
 
 print result
 
