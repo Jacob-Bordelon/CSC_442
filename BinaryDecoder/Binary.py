@@ -23,8 +23,6 @@ def convert(num,bitType):
     for index in range(len(num)):
         if(int(num[index])==1):
             value+=(2**((bitType-1)-index))
-    if value == 8:
-        return "[bs]"
     return chr(value)
 
     
