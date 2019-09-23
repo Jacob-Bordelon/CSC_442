@@ -1,10 +1,10 @@
 test1 = 7bit Hello World!
 test2 = 8bit Hello World!
-test3 = user:root pass:astronoy[bs]er
-test4 = user:root pass:[bs]astronomy[bs]er 
-test5 = user:root pass:astronomy[bs][bs][bs][bs]
+test3 = user:root pass:astronomy[bs]er
+test4 = user:root pass:[bs]astronomy[bs]er (also both 7 and 8 bit)
+test5 = user:root pass:astronomy[bs][bs][bs][bs] (also both 7 and 8 bit)
 test6 = user:root pass:astronomy[bs]er[lf]user:xyz[tab]pass:123[lf]name pass:word[cr]user:
-test7 = user:root pass:astronomer
+test7 = user:root pass:astronomer (multiline)
 	user:team pass:two
 converter: https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html
 where [bs] = backspace (8)

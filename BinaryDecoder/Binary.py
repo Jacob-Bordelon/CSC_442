@@ -10,7 +10,7 @@
 #           the file into readable ouptut for the user.
 
 import sys
-
+result = ""
 
 # This function converts the list of 7 or 8 binary strings
 # first, it iterates through the string, checking for 1's
@@ -23,7 +23,8 @@ def convert(num,bitType):
     for index in range(len(num)):
         if(int(num[index])==1):
             value+=(2**((bitType-1)-index))
-    if value == 8:
+    # required to handle backspace at end of line
+    if value == 8: 
         return "[bs]"
     return chr(value)
 
@@ -37,18 +38,19 @@ contents = sys.stdin.read()[:-1]
 # if not, its gotta be an 8 bit
 # Note: This can be adjusted if needed 
 if(len(contents)%7==0):
-    bitType=7
-else:
-    bitType=8
+    #finally, iterate through the entire file until the resulted output is complete
+    # just a simple for-loop, breaking up the string into the bitType size and iterateing 
+    # through it by that value
+    # the output is collected in result 
+    for i in range(0,len(contents),7):
+        result+= convert(contents[i:i+7],7)
+if(len(contents)%8==0):
+    # if result isn't empty make a new line
+    # check if this is okay
+    result += ("\n" + "="*25 + "\n") if (result != "") else ""
+    for i in range(0,len(contents),8):
+        result+= convert(contents[i:i+8],8)
 
-#finally, iterate through the entire file until the resulted output is complete
-# just a simple for-loop, breaking up the string into the bitType size and iterateing 
-# through it by that value
-# the output is collected in result 
-
-result = ""
-for i in range(0,len(contents),bitType):
-    result+= convert(contents[i:i+bitType],bitType)
 
 # if the backspace key exists in the final result remove it
 # user a while loop to get every instance of backspace
@@ -57,6 +59,7 @@ while "[bs]" in result:
     result = result[0:erase-1:] + result[erase+4::]
 
 print result
+
 
     
     
