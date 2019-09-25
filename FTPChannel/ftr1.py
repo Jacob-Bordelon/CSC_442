@@ -37,7 +37,6 @@ ftp.close()
 bin_msg = ""
 for a_file in source:
     bin_msg += str(getBinary(a_file[0:10]))
-print "Length = ",len(bin_msg)
 # With the binary message, generate the covert message
 # and output to the terminal
 secret = ""
