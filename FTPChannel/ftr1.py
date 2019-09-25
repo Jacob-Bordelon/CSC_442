@@ -1,8 +1,7 @@
-#python2, linux OS
-import os
+#python2
 from ftplib import FTP
 #variable to determine whether to do 7 or 10
-METHOD = 7
+METHOD = 10
 
 # this function converts a binary number
 # into a 7-bit ASCII character
@@ -28,8 +27,6 @@ ftp.login()
 ftp.cwd("/"+str(METHOD))
 ftp.retrlines('LIST',source.append)
 ftp.close()
-#for test purposes
-#os.system("ls -lh >> files.txt")
 
 # start decoding message hidden in permissions by grabbing
 # the list of files, isolating the permissions for each file,
