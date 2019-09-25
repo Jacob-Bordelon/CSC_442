@@ -49,7 +49,6 @@ for i in range(0, len(bin_msg)-10,10):
     if ((METHOD == 10) and (len(bin_msg[i+shift:i+shift+7])%7 != 0)):
         continue;
     secret += getASCII(bin_msg[i+shift:i+shift+7])
-#print secret
 print secret
 # file cleanup
 #os.system("rm files.txt")
