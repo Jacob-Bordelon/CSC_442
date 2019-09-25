@@ -21,6 +21,7 @@ def getBinary(x):
     return permissions
 ######################################################################
 # fetch the file listing with permission from FTP server
+# should hidden files be included?
 os.system("ls -lh >> files.txt")
 
 # start decoding message hidden in permissions by grabbing
