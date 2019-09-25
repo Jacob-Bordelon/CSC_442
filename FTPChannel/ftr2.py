@@ -1,17 +1,3 @@
-#python2, universal
-import os
-from sys import platform
-#variable to determine whether to do 7 or 10
-METHOD = 7
-# fetch all the files in the directory
-# should we include hidden files?
-if "win" in platform:
-    cmd = "dir > files.txt"
-elif "linux" in platform:
-    cmd = "ls -lh > files.txt"
-else:
-    cmd = "ls -l > files.txt"
-
 #python2, linux OS
 import os
 #variable to determine whether to do 7 or 10
@@ -35,7 +21,8 @@ def getBinary(x):
     return permissions
 ######################################################################
 # fetch the file listing with permission from FTP server
-os.system(cmd)
+# should hidden files be included?
+os.system("ls -lh >> files.txt")
 
 # start decoding message hidden in permissions by grabbing
 # the list of files, isolating the permissions for each file,
@@ -61,3 +48,4 @@ print secret
 
 # file cleanup
 os.system("rm files.txt")
+

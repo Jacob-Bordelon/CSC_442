@@ -1,8 +1,21 @@
-#python2, linux OS
+#python2, universal
 import os
-from ftplib import FTP
+from sys import platform
 #variable to determine whether to do 7 or 10
 METHOD = 7
+# fetch all the files in the directory
+# should we include hidden files?
+if "win" in platform:
+    cmd = "dir > files.txt"
+elif "linux" in platform:
+    cmd = "ls -lh > files.txt"
+else:
+    cmd = "ls -l > files.txt"
+
+#python2, linux OS
+import os
+#variable to determine whether to do 7 or 10
+METHOD = 7 
 
 # this function converts a binary number
 # into a 7-bit ASCII character
@@ -22,20 +35,18 @@ def getBinary(x):
     return permissions
 ######################################################################
 # fetch the file listing with permission from FTP server
-source = []
-ftp = FTP('jeangourd.com')
-ftp.login()
-ftp.cwd("/"+str(METHOD))
-ftp.retrlines('LIST',source.append)
-#for test purposes
-#os.system("ls -lh >> files.txt")
+os.system(cmd)
 
 # start decoding message hidden in permissions by grabbing
 # the list of files, isolating the permissions for each file,
 # and then decoding the permissions
 bin_msg = ""
-for a_file in source:
-    bin_msg += str(getBinary(a_file[0:10]))
+source = open('files.txt','r').readlines() 
+for line in source:
+    attributes = line.split(' ')
+    if "total" not in attributes[0]:
+        bin_msg += str(getBinary(attributes[0]))
+
 # With the binary message, generate the covert message
 # and output to the terminal
 secret = ""
@@ -45,14 +56,8 @@ for i in range(0, len(bin_msg)-10,10):
     # skip if any of first 3 bits is set
     if((METHOD == 7) and ("1" in bin_msg[i:i+3])):
         continue;
-    #ignore any trailing 0s
-    if ((METHOD == 10) and (len(bin_msg[i+shift:i+shift+7])%7 != 0)):
-        continue;
-    secret += getASCII(bin_msg[i+shift:i+shift+7])
-#print secret
+    secret += getASCII(bin_msg[i+shift:i+10])
 print secret
-# file cleanup
-#os.system("rm files.txt")
-#close server
-ftp.close()
 
+# file cleanup
+os.system("rm files.txt")
