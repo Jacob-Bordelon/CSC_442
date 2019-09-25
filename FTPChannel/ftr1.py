@@ -41,13 +41,10 @@ for a_file in source:
 secret = ""
 # check if 7bit or 10bit so can shift accordingly
 shift = 3 if (METHOD == 7) else 0
-for i in range(0, len(bin_msg)-10,10):
+for i in range(0, len(bin_msg),10):
     # skip if any of first 3 bits is set
     if((METHOD == 7) and ("1" in bin_msg[i:i+3])):
-        continue;
-    #ignore any trailing 0s
-    if ((METHOD == 10) and (len(bin_msg[i+shift:i+shift+7])%7 != 0)):
-        continue;
+        continue
     secret += getASCII(bin_msg[i+shift:i+shift+7])
 print secret
 # file cleanup
