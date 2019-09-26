@@ -5,7 +5,7 @@
 # Version:  09.25.19
 # Usage:    Use python 2.7
 #           Example: python ftp.py
-# Github:   https://github.com/Jacob-Bordelon/CSC_442/blob/master/FTP/ftp.py
+# Github:   https://github.com/Jacob-Bordelon/CSC_442/blob/master/FTP/basic_ftp.py
 # Descr:    This program connects to an ftp server and grabs information
 #           about the files listed in a specified directory. It then
 #           isolate the files' permissions and decodes any messages that
