@@ -1,4 +1,8 @@
 #python2, linux OS
+
+# if ran normally, it will run it as METHOD = 7
+# the arguments in brackets are optional
+# Usage: python ftp2.py [METHOD] [Server] [User] [Password]
 import os
 from ftplib import FTP
 import sys
@@ -53,10 +57,12 @@ def getFTP(method,server,user,password):
         secret += getASCII(bin_msg[i+shift:i+shift+7])
     return secret
 
-
+# Base configuraton
 args = {1:METHOD,2:'jeangourd.com',3:'anonymous',4:''}
 
+# if system arguments exists, append them to the dictionary
 for i in range(1,len(sys.argv)):
     args[i] = sys.argv[i]
 
+# Stdout 
 print getFTP(int(args[1]),args[2],args[3],args[4])
