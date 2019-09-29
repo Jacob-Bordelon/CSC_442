@@ -78,7 +78,9 @@ if len(sys.argv) < 3:
 
 
 mode = sys.argv[1]
-key = sys.argv[2]
+key = sys.argv[2].replace(' ','')
+
+
 
 if mode not in ['-e','-d']:
     final = "Mode not recognized \nPlease use either -e (encryption) or -d (decryption)\n"
@@ -93,7 +95,7 @@ while(True):
     message = sys.stdin.readline()
     if message == '':
         break
-    final = crypt(message, key,mode)
+    final = crypt(message, key, mode)
     sys.stdout.write(final)
 
 
