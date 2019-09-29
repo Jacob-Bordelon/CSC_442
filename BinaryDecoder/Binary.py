@@ -48,6 +48,12 @@ result = ""
 for i in range(0,len(contents),bitType):
     result+= convert(contents[i:i+bitType],bitType)
 
+# if the backspace key exists in the final result remove it
+# user a while loop to get every instance of backspace
+while "[bs]" in result:
+    erase = result.index("[bs]")
+    result = result[0:erase-1:] + result[erase+4::]
+
 print result
 
 ## if also bitType = 8
