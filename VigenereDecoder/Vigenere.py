@@ -57,8 +57,8 @@ def crypt(message, key, mode):
     result = ""
     for i in range(len(message)):
         # check for spaces
-        if(message[i] == " "):
-            result+=" "
+        if(not message[i].isalpha()):
+            result+=str(message[i])
         else:
             # will either encrypt or decrypt the message based on the mode
             result += getAlphabet(message[i],key[a%len(key)],mode)
