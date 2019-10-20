@@ -87,7 +87,6 @@ def byteStorage(File):
     j=0
     while j < len(S):
         W[o] = int(S[j], 16)
-        print(W[o])
         o += I
         j +=1
         
