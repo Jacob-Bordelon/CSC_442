@@ -27,7 +27,7 @@ class params:
         self.sentinal = "0x0 0xff 0x0 0x0 0xff 0x0".split(' ')
     
     def calculateInterval(self):
-        return floor((len(self.wrapper)-self.offset)/(len(self.hidden)+len(self.sentinal)))
+        return int(floor((len(self.wrapper)-self.offset)/(len(self.hidden)+len(self.sentinal))))
 
     def minWrapperSize(self):
         return len(self.hidden)*self.interval + self.offset
@@ -45,35 +45,61 @@ def byteExtraction(File):
     S = File.sentinal
     H = bytearray()
     W = File.wrapper
-
+    i=0
+    R = bytearray()
+    k = 0
+    while k< len(S):
+        R.append(int(S[k], 16))
+        k +=1
     while o < len(W):
-        b = W[o]
-        if b in S:
-            pass
+        c=bytearray()
+        j =0
+        if(W[o] == int(S[j], 16)):
+            while j < len(S):
+                if W[o]==int(S[j], 16):
+                    c.append(W[o])
+                    o+=I
+                else:
+                    break
+                j+=1
+            H+=c
+            if(c==R):  
+                print(c)             
+                stdout.buffer.write(H)
+                break
         else:
-            H+=b
-        o+=I
-    stdout.write(H)
+            H.append(W[o])
+            o+=I
+        i+=1
 
 
 def byteStorage(File):
     o = File.offset
     I = File.interval
     S = File.sentinal
-    H = File.hidden
-    W = File.wrapper
+    H = bytearray(File.hidden)
+    W = bytearray(File.wrapper)
+    i=0
+    while i < len(H):
+        W[o] = H[i]
+        o += I
+        i+=1
+    j=0
+    while j < len(S):
+        W[o] = int(S[j], 16)
+        print(W[o])
+        o += I
+        j +=1
+        
+    stdout.buffer.write(W)
 
     
 
 
 # Bit Method
 def bitExtraction(File):
-    o = File.offset
-    I = File.interval
-    S = File.sentinal
-    H = bytearray()
-    W = File.wrapper
-    
+    pass
+
 
   
    
@@ -98,12 +124,13 @@ if __name__ == "__main__":
             bitExtraction(a)
     else:
         if a.dataMethod == "-s":
-            pass
+            byteStorage(a)
         else:
             byteExtraction(a)
     
     
       
+
 
 
 
