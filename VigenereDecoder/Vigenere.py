@@ -57,8 +57,8 @@ def crypt(message, key, mode):
     result = ""
     for i in range(len(message)):
         # check for spaces
-        if(message[i] == " "):
-            result+=" "
+        if(not message[i].isalpha()):
+            result+=str(message[i])
         else:
             # will either encrypt or decrypt the message based on the mode
             result += getAlphabet(message[i],key[a%len(key)],mode)
@@ -78,7 +78,9 @@ if len(sys.argv) < 3:
 
 
 mode = sys.argv[1]
-key = sys.argv[2]
+key = sys.argv[2].replace(' ','')
+
+
 
 if mode not in ['-e','-d']:
     final = "Mode not recognized \nPlease use either -e (encryption) or -d (decryption)\n"
@@ -93,7 +95,7 @@ while(True):
     message = sys.stdin.readline()
     if message == '':
         break
-    final = crypt(message, key,mode)
+    final = crypt(message, key, mode)
     sys.stdout.write(final)
 
 
