@@ -98,6 +98,7 @@ def bitExtraction(File):
                 o += I
         H += b
         o += I
+    stdout.write(H)
 
 def bitStorage(File):
     o = File.offset
