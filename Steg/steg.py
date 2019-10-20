@@ -100,28 +100,28 @@ def bitExtraction(File):
         o += I
 
 def bitStorage(File):
-    offset = File.offset
-    interval = File.interval
+    o = File.offset
+    I = File.interval
     # convert from bytes to bits
-    sentinel = [format(i,'b') for i in File.sentinal]
-    hidden = [format(i,'b') for i in File.hidden]
-    wrapper = [format(i,'b') for i in File.wrapper]
+    S = [format(i,'b') for i in File.sentinal]
+    H = [format(i,'b') for i in File.hidden]
+    W = [format(i,'b') for i in File.wrapper]
 
     byte = 0
-    while(byte < len(hidden)):
+    while(byte < len(H)):
         for bit in range(7):
-            wrapper[offset] = bitAnd(wrapper[offset],"11111110")
-            wrapper[offset] = bitOr(wrapper[offset],rightShift(bitAnd(hidden[byte],"10000000"),7))
-            hidden[interval] = leftShift(hidden[byte],1)
-            offset += interval
+            W[o] = bitAnd(W[o],"11111110")
+            W[o] = bitOr(W[o],rightShift(bitAnd(H[byte],"10000000"),7))
+            H[I] = leftShift(H[byte],1)
+            o += I
         byte += 1
     biny = 0
-    while(biny < len(sentinel)):
+    while(biny < len(S)):
         for ind in range(7):
-            wrapper[offset] = bitAnd(wrapper[offset],"11111110")
-            wrapper[offset] = bitOr(wrapper[offset],rightShift(bitAnd(sentinel[biny],"10000000"),7))
-            sentinel[biny] = leftShift(sentinel[biny],1)
-            offset += interval
+            W[o] = bitAnd(W[o],"11111110")
+            W[o] = bitOr(W[o],rightShift(bitAnd(S[biny],"10000000"),7))
+            S[biny] = leftShift(S[biny],1)
+            o += I
         biny += 1
 
 # for shifts make sure to handle if not 8 bits;
