@@ -50,23 +50,11 @@ def byteExtraction(File):
     H = File.hidden
     W = File.wrapper
 
-    # Change to False to grab bytes from right to left
-    forward = True
-    if forward: #left to right
-        start = o
-        end = len(W)
-        step = I
-    else: # right to left
-        start = len(W) - 1
-        end = o-1
-        step= -I
-
-    
-    # Uses a for-loop incase if you want to grab bits from the other direction, it can handle it
-    for o in range(start,end,step):
+    while o < len(W):
         b = W[o]
         if b not in S:
             H+=chr(b)
+        o+=I
     stdout.write(H)
     
 
@@ -107,19 +95,7 @@ def bitExtraction(File):
     H = File.hidden
     W = File.wrapper
 
-    # Change to False to grab bits from right to left
-    forward = True
-    if forward: #left to right
-        start = o
-        end = len(W)
-        step = I
-    else: #right to left
-        start = len(W) - 1
-        end = o-1
-        step= -I
-
-    # Uses a for-loop incase if you want to grab bits from the other direction, it can handle it
-    for o in range(start,end,step):
+    while o < len(W):
         b = 0
         for j in range(8):  
             # this break check is needed incase the offset variable is greater than the list of bytes
@@ -131,6 +107,7 @@ def bitExtraction(File):
                 o+=I
         if b not in S:
             H += bytearray(chr(b))
+        o+=I
     stdout.write(H)
     
     
