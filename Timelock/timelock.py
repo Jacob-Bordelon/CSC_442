@@ -24,7 +24,7 @@ class utcTime:
     # Constructs a new 'utcTime' object.
     # Given an inputted time in the format 'YY MM DD HH MM SS', this time 
     # is converted to a datetime instance with adjustments being made for
-    # daylight savings time. THe seconds elapsed since
+    # daylight savings time. The seconds elapsed since
     # January 1, 1970 are also calculated.
     def __init__(self,sInput):
         # convert to array for parsing
@@ -53,8 +53,7 @@ class utcTime:
     # This method returns the amount of seconds elapsed as a string. 
     def __str__(self):
         return str(self.seconds)
-
-
+#============================================ METHODS ============================================#
 # This method generates a 4-character code based on a given hash string.
 # Given the hashed value, the first 2 letters as read from left to right
 # and last 2 single digits as read from right to left to generate the
@@ -66,8 +65,7 @@ def fourBit(hashed):
     # maintain the order of the letters but reverse the order of the digits
     d = [i for i in hashed if i.isdigit()][::-1] 
     l = [i for i in hashed if i.isalpha()]
-
-    
+        
     # If we have more than 2 digits AND more than 2 letters,
     # add the first two objects to the string and join the
     # the elements together into one string
