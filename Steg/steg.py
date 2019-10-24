@@ -70,7 +70,7 @@ class params:
 def byteExtraction(File):
     o = File.offset # how far down to start looking
     I = File.interval # iterations to look at
-    S = File.sentinal
+    S = bytearray([int(i,16) for i in File.sentinal])
     H = File.hidden
     W = File.wrapper
 
