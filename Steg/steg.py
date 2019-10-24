@@ -65,7 +65,7 @@ class params:
     # return the maximum size hidden file a wrapper could hold
     def maxHiddenSize(self):
         return floor((len(self.wrapper) - self.offset - len(self.sentinal))/self.interval)
-#======================================== CLASSES ========================================#
+#======================================== METHODS ========================================#
 #  This method extracts a hidden message or file from a file using the Byte Method
 def byteExtraction(File):
     o = File.offset # how far down to start looking
@@ -88,8 +88,7 @@ def byteExtraction(File):
     # output the hidden file
     stdout.write(H)
     
-
-#Store
+#  This method stores a hidden message or file into a file using the Byte Method
 def byteStorage(File):
     o = File.offset
     I = File.interval
@@ -97,28 +96,23 @@ def byteStorage(File):
     H = File.hidden
     W = File.wrapper
 
-    # input in the Hidden bytes
+    # input in the Hidden bytes at the offset
     i=0
     while i < len(H):
         W[o] = H[i]
-        o += I
+        o += I # increase the offset
         i+=1
 
     i=0
     # input in the sentinal
     while i < len(S):
         W[o] = S[i]
-        o += I
+        o += I #increase the offset
         i +=1
-        
+    # output the wrapper file
     stdout.write(W)
 
-    
-
-
-# Bit Method
-
-#Extract
+#  This method extracts a hidden message or file from a file using the Bit Method
 def bitExtraction(File):
     o = File.offset
     I = File.interval
@@ -126,23 +120,28 @@ def bitExtraction(File):
     H = File.hidden
     W = File.wrapper
 
+    # only continue if the offset is less than the length of the wrapper file
     while o < len(W):
         b = 0
+        # extract the data bit-by-bit, grabbing the least significant bit
         for j in range(8):  
-            # this break check is needed incase the offset variable is greater than the list of bytes
+            # this break check is needed incase the offset variable 
+            # is greater than the list of bytes
             if o >= len(W):
                 break
             b |= (W[o] & 1)
             if j < 7:
                 b = (b<<1) & (2**8-1)
                 o+=I
+        # if we haven't encountered the sentinal, add it to the hidden file
         if b not in S:
             H += bytearray(chr(b))
+        # increase the offset
         o+=I
+    # output the hidden file
     stdout.write(H)
     
-    
-# Store
+#  This method stores a hidden message or file into a file using the Bit Method
 def bitStorage(File):
     o = File.offset
     I = File.interval
@@ -150,9 +149,10 @@ def bitStorage(File):
     H = File.hidden
     W = File.wrapper
 
-    # input in the hidden bits
+    # input in the hidden bits, bit-by-bit
     i = 0
     while i < len(H):
+        # grab the most significant bits
         for j in range(8):
             W[o] &= 11111110
             W[o] |= ((H[i] & 10000000) >> 7)
@@ -169,15 +169,15 @@ def bitStorage(File):
             S[i] = (S[i] << 1) & (2**8-1)
             o+=I
         i+=1
+    # output the wrapper file
     stdout.write(W)
-    
 
-# ////////////////////[   MAIN   }///////////////////////////////////////
+#======================================== MAIN PROGRAM ========================================#
 if __name__ == "__main__":
-    
-    a = params(args,sentinal) # first, create a params instance to organize data given from the flags
-
-    # then using the bitMethod and Datamethod, determine which one youre using and call that particular function
+    # first, create a params instance to organize data given from the flags
+    a = params(args,sentinal) 
+    # then using the bitMethod and Datamethod, determine which one you're using
+    # and call that particular function
     if a.bitMethod == "-b": # Bit method
         if a.dataMethod == "-s":
             bitStorage(a)   # Store
