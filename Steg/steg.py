@@ -45,7 +45,7 @@ class params:
         try:
             self.wrapper = bytearray(open(args.wrapper_file,'rb').read()) if args.wrapper_file != None else bytearray()
         except IOError:
-            print "Wrapper file: \""+args.wrapper_file+"\"not found."
+            print "Wrapper file: \""+args.wrapper_file+"\" not found."
             exit()
         try:
             self.hidden = bytearray(open(args.hidden_file,'rb').read()) if args.hidden_file != None else bytearray()
@@ -83,6 +83,16 @@ def byteExtraction(File):
         # to the hidden file
         if b not in S:
             H+=chr(b)
+        else:
+        	sample = bytearray(len(S))
+        	start = o
+        	for k in range(0, len(S)):
+        		sample[k] = W[start]
+        		start+=I        	
+        	if(sample == S): # if the two bytearrays equal, it's done
+        		break
+        	else:
+        		H+=chr(b)
         # increase the offset
         o+=I
     # output the hidden file
