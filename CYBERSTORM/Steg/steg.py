@@ -13,9 +13,8 @@ parser.add_argument("-o","--offset",help="Set offset to <val>",type=int)
 parser.add_argument("-i","--interval",default=1,help=" Set interval to <val>",type=int)
 parser.add_argument("-w","--wrapper_file",help="Set wrapper file to <val>")
 parser.add_argument("-h","--hidden_file",help="Set hidden file to <val>")
+parser.add_argument('--kind',action="store_true",help="Show the kind of file if the file is a file")
 
-parser.add_argument("-io","--iterate_offset",nargs='+',help="Iterate through the offset values")
-parser.add_argument("-ii","--iterate_interval",nargs='+',help="Iterate through the interval values")
 
 args = parser.parse_args()
 
@@ -30,9 +29,7 @@ class params:
         self.wrapper = bytearray(open(args.wrapper_file,'rb').read()) if args.wrapper_file != None else bytearray()
         self.hidden = bytearray(open(args.hidden_file,'rb').read()) if args.hidden_file != None else bytearray()
         self.sentinal = bytearray(''.join([chr(int(i,16)) for i in sentinal.split(' ')]))
-        self.ii = [int(i) for i in args.iterate_interval] +[1]*(3-len(args.iterate_interval)) if args.iterate_interval != None else None
-        self.io = [int(i) for i in args.iterate_offset] +[1]*(3-len(args.iterate_offset)) if args.iterate_offset != None else None
-    
+        
     # Calculate the best interval given a wrapper and hidden file
     @property
     def calculateInterval(self):
@@ -70,7 +67,7 @@ def byteExtraction(File):
         E = (H[:H.index(S)])
         kind = filetype.guess(E)
         if kind != None:
-            return E
+            return E,kind.extension
     except ValueError:
         stderr.write("Sentinal was not found in the File...Must be wrong interval/offset value\n")
         
@@ -129,7 +126,7 @@ def bitExtraction(File):
         E = (H[:H.index(S)])
         kind = filetype.guess(E)
         if kind != None:
-            return E
+            return E,kind.extension
     except ValueError:
         stderr.write("Sentinal was not found in the File...Must be wrong interval/offset value\n")
         
@@ -179,16 +176,22 @@ if __name__ == "__main__":
             bitStorage(a)   # Store
         elif a.dataMethod == "-r":
             E = bitExtraction(a)
-            if E != None:
-                stdout.write(E)
+            
+            if E[0] != None:
+                stdout.write(E[0])
+                if args.kind == True:
+                    stderr.write("{}\n".format(E[1]))
                 stderr.write("Done\n")
     elif a.bitMethod == "-B":   # Byte method
         if a.dataMethod == "-s":
             byteStorage(a) # Store
         elif a.dataMethod == "-r":
             E = byteExtraction(a)
-            if E != None:
-                stdout.write(E)
+            
+            if E[0] != None:
+                stdout.write(E[0])
+                if args.kind == True:
+                    stderr.write("{}\n".format(E[1]))
                 stderr.write("Done\n")
                     
             
